@@ -1,7 +1,7 @@
 <template>
   <div class="nav-bar">
-    <div class="top-nav">
-      <ul>
+    <nav class="top-nav">
+      <ul class="clearfix">
         <template v-if="token">
           <li>
             <a href="javascript:;" class="login-left"
@@ -23,16 +23,10 @@
           <a href="javascript:;"><i class="iconfont icon-phone"></i>手机版</a>
         </li>
       </ul>
-    </div>
+    </nav>
     <div class="header-nav">
       <h1><img src="~@/assets/img/logo.png" alt="" /></h1>
-      <ul class="header-middle-nav">
-        <template v-for="item in headerArr" :key="item">
-          <li>
-            <router-link to="/">{{ item }}</router-link>
-          </li>
-        </template>
-      </ul>
+      <TopNavHeader />
       <div class="search">
         <div><i class="iconfont icon-search"></i> <input type="text" placeholder="搜索" /></div>
       </div>
@@ -44,21 +38,21 @@
 </template>
 
 <script lang="ts" setup>
+import TopNavHeader from "./TopNavHeader.vue";
 const token = sessionStorage.getItem("token");
 const navArr = ["我的订单", "会员中心", "帮助中心", "关于我们"];
-const headerArr = ["首页", "居家", "美食", "服饰", "母婴", "个护", "严选", "数码", "运动", "杂项"];
 </script>
 
 <style scoped lang="less">
 .nav-bar {
-  height: 53px;
-  background: #333333;
   .top-nav {
-    width: 1240px;
-    margin: 0 auto;
+    // height: 53px;
+    background: #333333;
     overflow: hidden;
     ul {
+      width: 880px;
       float: right;
+      margin: 0 auto;
       li {
         display: inline-block;
         line-height: 53px;
@@ -84,6 +78,7 @@ const headerArr = ["首页", "居家", "美食", "服饰", "母婴", "个护", "
     width: 1240px;
     margin: 0 auto;
     height: 132px;
+    background: #fff;
     // 购物车
     .cart {
       position: relative;
@@ -107,22 +102,7 @@ const headerArr = ["首页", "居家", "美食", "服饰", "母婴", "个护", "
         font-family: Arial;
       }
     }
-    // 中部导航
-    .header-middle-nav {
-      width: 720px;
-      display: flex;
-      align-items: center;
-      margin-left: 50px;
-      text-align: center;
-      li {
-        margin-right: 40px;
-        cursor: pointer;
-        &:hover {
-          color: #27ba9b;
-          border-bottom: 1px solid #27ba9b;
-        }
-      }
-    }
+
     // 搜索框
     .search {
       position: relative;
