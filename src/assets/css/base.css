@@ -32,7 +32,7 @@ a {
 /* 给父类添加一个 clearfix */
 .clearfix:before,
 .clearfix:after {
-  content: "";
+  content: '';
   display: table;
 }
 .clearfix:after {

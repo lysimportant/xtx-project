@@ -1,34 +1,69 @@
 <template>
+  <h1><img src="~@/assets/img/logo.png" alt="" /></h1>
   <ul class="header-middle-nav">
-    <template v-for="item in topCategory" :key="item">
-      <li>
-        <template v-if="item == '美食'">
-          <a href="#">{{ item }}</a>
-          <div class="layer">
-            <ul>
-              <li v-for="i in 10" :key="i">
-                <a href="#">
-                  <img
-                    src="http://zhoushugang.gitee.io/erabbit-client-pc-static/uploads/img/category%20(4).png"
-                    alt=""
-                  />
-                  <p>果干</p>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </template>
-        <router-link to="/" v-else>{{ item }}</router-link>
+    <li><router-link to="/">首页</router-link></li>
+    <!--    遍历数组渲染导航数据 -->
+    <template v-for="item in list" :key="item.id">
+      <li @mouseenter="show(item.id)" @mouseleave="hide(item.id)">
+        <router-link :to="`/category/${item.id}`" @click="hide(item.id)">{{
+          item.name
+        }}</router-link>
+        <div
+          class="layer"
+          :class="{ open: item.open }"
+          :style="{ top: props.top }"
+        >
+          <!--            子类的数据如果没有立刻加载完成用户触发则提示数据加载中       -->
+          <ul v-if="item.children">
+            <li
+              v-for="sub in item.children"
+              :key="sub.id"
+              @click="hide(item.id)"
+            >
+              <router-link :to="`/category/sub/${sub.id}`">
+                <img :src="sub.picture" :alt="sub.name" />
+                <p>{{ sub.name }}</p>
+              </router-link>
+            </li>
+          </ul>
+          <p v-else>数据加载中</p>
+        </div>
       </li>
     </template>
   </ul>
 </template>
 
 <script lang="ts" setup>
-import { topCategory } from "@/api/constant";
+import { computed, defineProps, withDefaults } from 'vue'
+import { useCategory } from '@/store/useCategory'
+const store = useCategory()
+const props = withDefaults(
+  defineProps<{
+    top?: string
+  }>(),
+  {
+    top: '150px'
+  }
+)
+store.setList() // 异步获取头部导航数据
+//将数据转换为动态数据
+const list = computed(() => store.list)
+
+const show = (id: number) => {
+  store.show(id)
+}
+const hide = (id: number) => {
+  store.hide(id)
+}
 </script>
 
 <style scoped lang="less">
+h1 {
+  width: 200px;
+  height: 80px;
+  padding: 0;
+  margin: 0;
+}
 // 中部导航
 .header-middle-nav {
   width: 720px;
@@ -44,20 +79,26 @@ import { topCategory } from "@/api/constant";
     &:hover {
       color: #27ba9b;
       border-bottom: 1px solid #27ba9b;
-      > .layer {
-        height: 132px;
-        opacity: 1;
-      }
+      // 显示二级类目
+      //> .layer {
+      //  height: 132px;
+      //  opacity: 1;
+      //}
     }
 
     .layer {
+      &.open {
+        height: 132px;
+        opacity: 1;
+      }
       width: 1240px;
       // height: 200px !important;
       background-color: #fff;
       position: absolute;
-      left: 340px;
-      top: 166px;
+      left: 336px;
+
       height: 0;
+      z-index: 999;
       overflow: hidden;
       opacity: 0;
       box-shadow: 0 0 5px #ccc;
@@ -82,7 +123,6 @@ import { topCategory } from "@/api/constant";
           &:hover {
             p {
               color: #27ba9b;
-              border-bottom: 1px solid #27ba9b;
             }
           }
         }

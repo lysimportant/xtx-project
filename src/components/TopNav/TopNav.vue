@@ -1,34 +1,38 @@
 <template>
   <div class="nav-bar">
     <nav class="top-nav">
-      <ul class="clearfix">
-        <template v-if="token">
+      <div>
+        <ul class="clearfix">
+          <template v-if="token">
+            <li>
+              <a href="javascript:;" class="login-left"
+                ><i class="iconfont icon-user"></i> 用户名字</a
+              >
+            </li>
+            <li><a href="javascript:;">退出登录</a></li>
+          </template>
+          <template v-else>
+            <li><a href="javascript:;" class="login-left">请先登录</a></li>
+            <li><a href="javascript:;">免费注册</a></li>
+          </template>
+          <template v-for="item in navArr" :key="item">
+            <li>
+              <a href="javascript:;">{{ item }}</a>
+            </li>
+          </template>
           <li>
-            <a href="javascript:;" class="login-left"
-              ><i class="iconfont icon-user"></i> 用户名字</a
-            >
+            <a href="javascript:;"><i class="iconfont icon-phone"></i>手机版</a>
           </li>
-          <li><a href="javascript:;">退出登录</a></li>
-        </template>
-        <template v-else>
-          <li><a href="javascript:;" class="login-left">请先登录</a></li>
-          <li><a href="javascript:;">免费注册</a></li>
-        </template>
-        <template v-for="item in navArr" :key="item">
-          <li>
-            <a href="javascript:;">{{ item }}</a>
-          </li>
-        </template>
-        <li>
-          <a href="javascript:;"><i class="iconfont icon-phone"></i>手机版</a>
-        </li>
-      </ul>
+        </ul>
+      </div>
     </nav>
     <div class="header-nav">
-      <h1><img src="~@/assets/img/logo.png" alt="" /></h1>
       <TopNavHeader />
       <div class="search">
-        <div><i class="iconfont icon-search"></i> <input type="text" placeholder="搜索" /></div>
+        <div>
+          <i class="iconfont icon-search"></i>
+          <input type="text" placeholder="搜索" />
+        </div>
       </div>
       <div class="cart">
         <a href="javascript:;"><i class="iconfont icon-cart"></i><em>0</em></a>
@@ -38,9 +42,9 @@
 </template>
 
 <script lang="ts" setup>
-import TopNavHeader from "./TopNavHeader.vue";
-const token = sessionStorage.getItem("token");
-const navArr = ["我的订单", "会员中心", "帮助中心", "关于我们"];
+import TopNavHeader from './TopNavHeader.vue'
+const token = sessionStorage.getItem('token')
+const navArr = ['我的订单', '会员中心', '帮助中心', '关于我们']
 </script>
 
 <style scoped lang="less">
@@ -49,24 +53,30 @@ const navArr = ["我的订单", "会员中心", "帮助中心", "关于我们"];
     // height: 53px;
     background: #333333;
     overflow: hidden;
-    ul {
-      width: 880px;
-      float: right;
+    div {
+      height: 53px;
       margin: 0 auto;
-      li {
-        display: inline-block;
-        line-height: 53px;
-        padding: 0 5px;
-        .login-left {
-          border: 0;
-        }
-        a {
-          font-size: 14px;
-          border-left: 2px solid rgb(102, 102, 102);
-          color: #cdcdcd;
+
+      width: 1240px;
+      position: relative;
+      ul {
+        position: absolute;
+        right: 0;
+        li {
+          display: inline-block;
+          line-height: 53px;
           padding: 0 5px;
-          &:hover {
-            color: #27ba9b;
+          .login-left {
+            border: 0;
+          }
+          a {
+            font-size: 14px;
+            border-left: 2px solid rgb(102, 102, 102);
+            color: #cdcdcd;
+            padding: 0 5px;
+            &:hover {
+              color: #27ba9b;
+            }
           }
         }
       }

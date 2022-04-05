@@ -24,7 +24,9 @@
         </dl>
         <dl>
           <dt>服务热线</dt>
-          <dd class="hotline">400-0000-000 <small>周一至周日 8:00-18:00</small></dd>
+          <dd class="hotline">
+            400-0000-000 <small>周一至周日 8:00-18:00</small>
+          </dd>
         </dl>
       </div>
     </div>

@@ -1,9 +1,8 @@
-<script setup lang="ts">
-import Layout from "@/views/Layout.vue";
-</script>
+<script setup lang="ts"></script>
 
 <template>
-  <Layout />
+  <!--  Layout路由 -->
+  <router-view></router-view>
 </template>
 
 <style></style>
