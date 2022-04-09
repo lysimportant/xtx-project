@@ -10,6 +10,7 @@
         <router-link :to="`/category/${item.id}`">
           <span>{{ item.name }}</span>
         </router-link>
+        <!-- 二层 -->
         <template v-if="item.children">
           <router-link
             v-for="sub in item.children"
@@ -18,6 +19,15 @@
           >
             <span>{{ sub.name }} </span>
           </router-link>
+        </template>
+        <template v-else>
+          <skeleton
+            bg="rgba(255,255,255,.2)"
+            width="60px"
+            height="18px"
+            :style="{ margin: '0 5px' }"
+          />
+          <skeleton width="50px" height="18px" bg="rgba(255,255,255,.2)" />
         </template>
       </li>
     </ul>
@@ -102,9 +112,10 @@ findBrand().then((data: any) => {
   top: 0;
   left: 0;
   width: 250px !important;
-
+  z-index: 99;
   &-list {
     width: 100%;
+
     > li {
       width: 250px;
       height: 50px;
@@ -112,6 +123,9 @@ findBrand().then((data: any) => {
       padding-left: 40px;
       color: #fff;
       background: rgba(0, 0, 0, 0.3);
+      a {
+        color: #fff;
+      }
       &:hover,
       &.active {
         background: #27ba9b;
@@ -215,6 +229,17 @@ findBrand().then((data: any) => {
     .layer {
       display: block;
     }
+  }
+}
+.xtx-skeleton {
+  animation: fade 1s linear infinite alternate;
+}
+@keyframes fade {
+  from {
+    opacity: 0.2;
+  }
+  to {
+    opacity: 1;
   }
 }
 </style>

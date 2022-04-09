@@ -62,7 +62,7 @@ h1 {
   width: 200px;
   height: 80px;
   padding: 0;
-  margin: 0;
+  margin: auto;
 }
 // 中部导航
 .header-middle-nav {
