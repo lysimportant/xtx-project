@@ -42,9 +42,9 @@
 </template>
 
 <script lang="ts" setup>
-import TopNavHeader from './TopNavHeader.vue'
-const token = sessionStorage.getItem('token')
-const navArr = ['我的订单', '会员中心', '帮助中心', '关于我们']
+import TopNavHeader from './TopNavHeader.vue';
+const token = sessionStorage.getItem('token');
+const navArr = ['我的订单', '会员中心', '帮助中心', '关于我们'];
 </script>
 
 <style scoped lang="less">
@@ -94,7 +94,7 @@ const navArr = ['我的订单', '会员中心', '帮助中心', '关于我们']
       position: relative;
       text-align: center;
       line-height: 132px;
-      left: 10px;
+      left: -15px;
       i {
         font-size: 22px;
       }

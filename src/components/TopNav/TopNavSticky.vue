@@ -11,16 +11,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import TopNavHeader from 'components/TopNav/TopNavHeader.vue'
+import { ref, onMounted } from 'vue';
+import TopNavHeader from 'components/TopNav/TopNavHeader.vue';
 // 记录屏幕Y轴的高度
-const y = ref(0)
+const y = ref(0);
 onMounted(() => {
   window.onscroll = (e) => {
-    const scrollTop = document.documentElement.scrollTop
-    y.value = scrollTop
-  }
-})
+    const scrollTop = document.documentElement.scrollTop;
+    y.value = scrollTop;
+  };
+});
 </script>
 
 <style scoped lang="less">

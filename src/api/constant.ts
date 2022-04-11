@@ -11,4 +11,4 @@ export const topCategory = [
   '数码',
   '运动',
   '杂货'
-]
+];

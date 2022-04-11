@@ -9,18 +9,27 @@
         <HomeBanner />
       </div>
     </div>
-      <!-- 新鲜好物 -->
-      <HomeNew />
-      <!-- 人气推荐 -->
-      <HomeHot />
+    <!-- 新鲜好物 -->
+    <HomeNew />
+    <!-- 人气推荐 -->
+    <HomeHot />
+    <!-- 品牌推荐 -->
+    <HomeBrand />
+    <!-- 产品区块 -->
+    <HomeProduct />
+    <!-- 专题 -->
+    <HomeSpecial />
   </div>
 </template>
 
 <script lang="ts" setup>
-import HomeCategory from './components/home-category.vue'
-import HomeBanner from './components/home-banner.vue'
-import HomeNew from './components/home-new.vue'
-import HomeHot from './components/home-hot.vue'
+import HomeCategory from './components/home-category.vue';
+import HomeBanner from './components/home-banner.vue';
+import HomeNew from './components/home-new.vue';
+import HomeHot from './components/home-hot.vue';
+import HomeBrand from './components/home-brand.vue';
+import HomeProduct from './components/home-product.vue';
+import HomeSpecial from './components/home-special.vue';
 </script>
 
 <style scoped lang="less">

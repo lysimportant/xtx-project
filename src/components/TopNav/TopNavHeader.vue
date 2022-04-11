@@ -34,27 +34,27 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, defineProps, withDefaults } from 'vue'
-import { useCategory } from '@/store/useCategory'
-const store = useCategory()
+import { computed, defineProps, withDefaults } from 'vue';
+import { useCategory } from '@/store/useCategory';
+const store = useCategory();
 const props = withDefaults(
   defineProps<{
-    top?: string
+    top?: string;
   }>(),
   {
     top: '150px'
   }
-)
-store.setList() // 异步获取头部导航数据
+);
+store.setList(); // 异步获取头部导航数据
 //将数据转换为动态数据
-const list = computed(() => store.list)
+const list = computed(() => store.list);
 
 const show = (id: number) => {
-  store.show(id)
-}
+  store.show(id);
+};
 const hide = (id: number) => {
-  store.hide(id)
-}
+  store.hide(id);
+};
 </script>
 
 <style scoped lang="less">

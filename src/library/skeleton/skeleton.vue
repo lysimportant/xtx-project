@@ -10,23 +10,23 @@
   </div>
 </template>
 <script lang="ts">
-export default { name: 'skeleton' }
+export default { name: 'skeleton' };
 </script>
 <script setup lang="ts">
 // 使用的时候需要动态设置 高度，宽度，背景颜色，是否闪下
-import { defineProps, withDefaults } from 'vue'
+import { defineProps, withDefaults } from 'vue';
 interface Props {
-  width?: string
-  height?: string
-  bg?: string
-  animated?: boolean
+  width?: string;
+  height?: string;
+  bg?: string;
+  animated?: boolean;
 }
 const props = withDefaults(defineProps<Props>(), {
   width: '100px',
   height: '100px',
   bg: '#efefef',
   animated: false
-})
+});
 </script>
 <style scoped lang="less">
 .xtx-skeleton {

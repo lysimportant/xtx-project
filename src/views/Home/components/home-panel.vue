@@ -3,7 +3,7 @@
     <div class="container">
       <div class="head">
         <h3>
-          {{ props.title }}<small>{{ props.subTitle }}</small>
+          {{ props.title }}<small>{{ props.subTitle ?? '' }}</small>
         </h3>
         <!-- 右上角的内容 具名插槽 -->
         <slot name="right"></slot>
@@ -15,12 +15,12 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from 'vue'
+import { defineProps } from 'vue';
 interface Props {
-  title: string
-  subTitle: string
+  title: string;
+  subTitle?: string;
 }
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 </script>
 
 <style scoped lang="less">

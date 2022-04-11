@@ -10,9 +10,9 @@
 </template>
 
 <script lang="ts" setup>
-import TopNav from '@/components/TopNav/TopNav.vue'
-import FooterCmp from 'components/Footer/FooterCmp.vue'
-import TopNavSticky from 'components/TopNav/TopNavSticky.vue'
+import TopNav from '@/components/TopNav/TopNav.vue';
+import FooterCmp from 'components/Footer/FooterCmp.vue';
+import TopNavSticky from 'components/TopNav/TopNavSticky.vue';
 </script>
 
 <style scoped lang="less"></style>

@@ -8,17 +8,17 @@
 <script lang="ts">
 export default {
   name: 'CarMore'
-}
+};
 </script>
 
 <script setup lang="ts">
-import { defineProps, withDefaults } from 'vue'
+import { defineProps, withDefaults } from 'vue';
 interface Props {
-  path: string
+  path?: string;
 }
 const props = withDefaults(defineProps<Props>(), {
   path: '/'
-})
+});
 </script>
 
 <style scoped lang="less">

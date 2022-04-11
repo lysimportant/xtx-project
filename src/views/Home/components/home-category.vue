@@ -70,17 +70,17 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, reactive, ref } from 'vue'
-import { useCategory } from 'store/useCategory'
-import { findBrand } from '@/api/home'
-const sotre = useCategory()
+import { computed, reactive, ref } from 'vue';
+import { useCategory } from 'store/useCategory';
+import { findBrand } from '@/api/home';
+const sotre = useCategory();
 // 得到分类9个后自己加一个
 const brand = reactive({
   id: 'brand',
   name: '品牌',
   children: [{ id: 'brand-chidlren', name: '品牌推荐' }],
   brands: []
-})
+});
 const menuList = computed(() => {
   // 每个一级分类的两个子分类
   const list = sotre.list.map((v) => {
@@ -89,21 +89,21 @@ const menuList = computed(() => {
       name: v.name,
       children: v.children && v.children.slice(0, 2),
       goods: v.goods
-    }
-  })
-  list.push(brand)
-  return list
-})
+    };
+  });
+  list.push(brand);
+  return list;
+});
 // 得到商品推荐数据
-const categoryId = ref(null)
+const categoryId = ref(null);
 // 找到对应的ID再到menuList里面匹配对应的item，返回并且渲染
 const currCategory = computed(() => {
-  return menuList.value.find((item: any) => item.id === categoryId.value)
-})
+  return menuList.value.find((item: any) => item.id === categoryId.value);
+});
 // 品牌推荐数据
 findBrand().then((data: any) => {
-  brand.brands = data.data.result
-})
+  brand.brands = data.data.result;
+});
 </script>
 
 <style scoped lang="less">
