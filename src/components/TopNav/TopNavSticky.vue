@@ -41,8 +41,6 @@ onMounted(() => {
     opacity: 1;
   }
   .container {
-    width: 1240px;
-    margin: 0 auto;
     display: flex;
     .right {
       height: 20px;

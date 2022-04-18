@@ -8,7 +8,7 @@
           <ul v-if="result.length" class="goods-list">
             <li v-for="item in result" :key="item.id">
               <RouterLink :to="`/product/${item.id}`">
-                <img :src="item.picture" alt="" />
+                <img v-lazy="item.picture" alt="" />
                 <p class="name">{{ item.title }}</p>
                 <p class="desc">{{ item.alt }}</p>
               </RouterLink>

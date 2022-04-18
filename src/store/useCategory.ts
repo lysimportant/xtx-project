@@ -22,7 +22,7 @@ export const useCategory = defineStore('category', {
       // 添加一个显示控制Boolean open
       this.list = data.result.map((v) => ({ ...v, open: false }));
     },
-    // show 和 hidden方法 显示和隐藏
+    // show 和 hidden 方法 显示和隐藏
     show(id: number) {
       const currCategory = this.list.find((item) => item.id === id);
       currCategory.open = true;

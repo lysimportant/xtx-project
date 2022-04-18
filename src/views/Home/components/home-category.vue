@@ -1,11 +1,12 @@
 <template>
-  <div class="category" @mouseleave="categoryId = null">
+  <div class="category" @mouseleave="categoryId = null, Index = null">
     <ul class="category-list">
       <li
-        v-for="item in menuList"
-        :key="item.id"
-        @mouseenter="categoryId = item.id"
-        :class="{ active: categoryId === item.id }"
+        v-for="(item, index) in menuList"
+        :key="index"
+        :index="index"
+        @mouseenter="(categoryId = item.id), (Index = index)"
+        :class="{ active: Index === index }"
       >
         <router-link :to="`/category/${item.id}`">
           <span>{{ item.name }}</span>
@@ -41,7 +42,7 @@
       <ul v-if="currCategory && currCategory.goods">
         <li v-for="item in currCategory.goods" :key="item.id">
           <RouterLink to="/">
-            <img :src="item.picture" alt="" />
+            <img v-lazy="item.picture" alt="" />
             <div class="info">
               <p class="name ellipsis-2">{{ item.name }}</p>
               <p class="desc ellipsis">{{ item.desc }}</p>
@@ -54,7 +55,7 @@
       <ul v-if="currCategory && currCategory.brands">
         <li class="brand" v-for="brand in currCategory.brands" :key="brand.id">
           <RouterLink to="/">
-            <img :src="brand.picture" :alt="brand.name" />
+            <img v-lazy="brand.picture" :alt="brand.name" />
             <div class="info">
               <p class="place">
                 <i class="iconfont icon-dingwei"></i>{{ brand.place }}
@@ -83,7 +84,7 @@ const brand = reactive({
 });
 const menuList = computed(() => {
   // 每个一级分类的两个子分类
-  const list = sotre.list.map((v) => {
+  const list = sotre.list.map((v: any) => {
     return {
       id: v.id,
       name: v.name,
@@ -96,6 +97,7 @@ const menuList = computed(() => {
 });
 // 得到商品推荐数据
 const categoryId = ref(null);
+const Index = ref(null);
 // 找到对应的ID再到menuList里面匹配对应的item，返回并且渲染
 const currCategory = computed(() => {
   return menuList.value.find((item: any) => item.id === categoryId.value);
