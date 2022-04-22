@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { topCategory } from '../api/constant';
-import { findAllCategory } from '../api/categary';
+import { findAllCategory } from '../api/category';
 
 interface categoryData {
   list: any[];
@@ -20,7 +20,7 @@ export const useCategory = defineStore('category', {
       // 获取分类的数据
       const { data: data } = await findAllCategory();
       // 添加一个显示控制Boolean open
-      this.list = data.result.map((v) => ({ ...v, open: false }));
+      this.list = data.result.map((v: any) => ({ ...v, open: false }));
     },
     // show 和 hidden 方法 显示和隐藏
     show(id: number) {

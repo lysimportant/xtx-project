@@ -1,5 +1,5 @@
 <template>
-  <div class="category" @mouseleave="categoryId = null, Index = null">
+  <div class="category" @mouseleave="(categoryId = null), (Index = null)">
     <ul class="category-list">
       <li
         v-for="(item, index) in menuList"

@@ -14,5 +14,5 @@ import { defineProps } from 'vue';
 interface Props {
   to?: any;
 }
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 </script>

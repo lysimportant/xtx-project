@@ -4,10 +4,10 @@
     <li><router-link to="/">首页</router-link></li>
     <!--    遍历数组渲染导航数据 -->
     <template v-for="item in list" :key="item.id">
-      <li @mouseenter="show(item.id)" @mouseleave="hide(item.id)">
-        <router-link :to="`/category/${item.id}`" @click="hide(item.id)">{{
-          item.name
-        }}</router-link>
+      <li @mousemove="show(item.id)" @mouseleave="hide(item.id)">
+        <router-link :to="`/category/${item.id}`" @click="hide(item.id)">
+          {{ item.name }}
+        </router-link>
         <div
           class="layer"
           :class="{ open: item.open }"
@@ -47,7 +47,9 @@ const props = withDefaults(
 );
 store.setList(); // 异步获取头部导航数据
 //将数据转换为动态数据
-const list = computed(() => store.list);
+const list = computed(() => {
+  return store.list;
+});
 
 const show = (id: number) => {
   store.show(id);
