@@ -1,4 +1,5 @@
 import type { App } from 'vue';
+
 import registerComponents from './registerComponents.js';
 import registerDirective from './registerDirective';
 export default {

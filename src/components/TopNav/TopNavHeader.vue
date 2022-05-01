@@ -1,5 +1,9 @@
 <template>
-  <h1><img src="~@/assets/img/logo.png" alt="" /></h1>
+  <h1>
+    <router-link to="/">
+      <img src="~@/assets/img/logo.png" alt="" />
+    </router-link>
+  </h1>
   <ul class="header-middle-nav">
     <li><router-link to="/">首页</router-link></li>
     <!--    遍历数组渲染导航数据 -->
@@ -35,14 +39,14 @@
 
 <script lang="ts" setup>
 import { computed, defineProps, withDefaults } from 'vue';
-import { useCategory } from '@/store/useCategory';
+import { useCategory } from '../../store/useCategory';
 const store = useCategory();
 const props = withDefaults(
   defineProps<{
     top?: string;
   }>(),
   {
-    top: '150px'
+    top: '110px'
   }
 );
 store.setList(); // 异步获取头部导航数据
@@ -97,8 +101,7 @@ h1 {
       // height: 200px !important;
       background-color: #fff;
       position: absolute;
-      left: 336px;
-
+      left: 0;
       height: 0;
       z-index: 999;
       overflow: hidden;

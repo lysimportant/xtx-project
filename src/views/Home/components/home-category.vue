@@ -72,8 +72,8 @@
 
 <script lang="ts" setup>
 import { computed, reactive, ref } from 'vue';
-import { useCategory } from 'store/useCategory';
-import { findBrand } from '@/api/home';
+import { useCategory } from '../../../store/useCategory';
+import { findBrand } from '../../../api/home';
 const sotre = useCategory();
 // 得到分类9个后自己加一个
 const brand = reactive({

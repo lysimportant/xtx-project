@@ -4,7 +4,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { findBanner } from '@/api/home';
+import { findBanner } from '../../../api/home';
 // 获取轮播图数据
 const sliders = ref([]);
 findBanner().then((data: any) => {

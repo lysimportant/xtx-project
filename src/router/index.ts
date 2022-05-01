@@ -14,8 +14,22 @@ const routes: RouteRecordRaw[] = [
       {
         path: '/category/sub/:id',
         component: () => import('views/category/sub.vue')
+      },
+      {
+        path: '/product/:id',
+        component: () => import('views/goods/index.vue')
       }
     ]
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('views/login/index.vue')
+  },
+  {
+    path: '/login/callback',
+    name: 'loginCallback',
+    component: () => import('views/login/callback.vue')
   }
 ];
 

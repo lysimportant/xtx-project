@@ -6,13 +6,18 @@
           <template v-if="token">
             <li>
               <a href="javascript:;" class="login-left"
-                ><i class="iconfont icon-user"></i> 用户名字</a
+                ><i class="iconfont icon-user"></i>
+                {{ store.profile.nickname ?? store.profile.account }}</a
               >
             </li>
-            <li><a href="javascript:;">退出登录</a></li>
+            <li><a href="javascript:;" @click="logout">退出登录</a></li>
           </template>
           <template v-else>
-            <li><a href="javascript:;" class="login-left">请先登录</a></li>
+            <li>
+              <router-link href="javascript:;" class="login-left" to="/login"
+                >请先登录</router-link
+              >
+            </li>
             <li><a href="javascript:;">免费注册</a></li>
           </template>
           <template v-for="item in navArr" :key="item">
@@ -42,9 +47,20 @@
 </template>
 
 <script lang="ts" setup>
+import { useUser } from '../../store/useUser';
+import { useRouter } from 'vue-router';
 import TopNavHeader from './TopNavHeader.vue';
-const token = sessionStorage.getItem('token');
+import localCache from '../../utils/cache';
+const store = useUser();
+const router = useRouter();
+const { token } = localCache.getCache('user') ?? { token: '' };
+
 const navArr = ['我的订单', '会员中心', '帮助中心', '关于我们'];
+const logout = () => {
+  window.localStorage.clear();
+  store.setUser({});
+  router.push('/login');
+};
 </script>
 
 <style scoped lang="less">
@@ -84,11 +100,12 @@ const navArr = ['我的订单', '会员中心', '帮助中心', '关于我们'];
   }
   .header-nav {
     display: flex;
-    overflow: hidden;
+    // overflow: hidden;
     width: 1240px;
     margin: 0 auto;
     height: 132px;
     background: #fff;
+    position: relative;
     // 购物车
     .cart {
       position: relative;

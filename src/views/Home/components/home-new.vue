@@ -22,9 +22,9 @@
 </template>
 <script setup lang="ts">
 import HomePanel from './home-panel.vue';
-import { findNew } from '@/api/home';
+import { findNew } from '../../../api/home';
 import HomeSkeleton from './home-skeleton.vue';
-import { useLazyData } from '@/hooks/index';
+import { useLazyData } from '../../../hooks/index';
 
 // findNew().then((res: any) =>{
 //   goods.value = res.data.result

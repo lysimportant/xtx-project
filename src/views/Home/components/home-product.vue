@@ -32,8 +32,8 @@
 <script setup lang="ts">
 import HomePanel from './home-panel.vue';
 import HomeGoods from './home-goods.vue';
-import { findGoods } from '@/api/home';
-import { useLazyData } from '@/hooks';
+import { findGoods } from '../../../api/home';
+import { useLazyData } from '../../../hooks';
 
 const { result, target } = useLazyData(findGoods);
 </script>

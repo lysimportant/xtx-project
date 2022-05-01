@@ -42,6 +42,7 @@ onMounted(() => {
   }
   .container {
     display: flex;
+    position: relative;
     .right {
       height: 20px;
       margin: auto;

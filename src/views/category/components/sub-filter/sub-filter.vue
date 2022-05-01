@@ -7,7 +7,7 @@
           <a
             href="javascript:;"
             :class="{ active: filterData.brands.selectedBrand === brand.id }"
-            @click="filterData.brands.selectedBrand = brand.id"
+            @click="changeBrand(brand.id)"
           >
             {{ brand.name }}
           </a>
@@ -24,7 +24,7 @@
             v-for="attr in p.properties"
             :key="attr.id"
             :class="{ active: p.selectedAttr === attr.id }"
-            @click="p.selectedAttr = attr.id"
+            @click="changeProp(p, attr.id)"
             >{{ attr.name }}</a
           >
         </div>
@@ -40,13 +40,14 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { watch, ref } from 'vue';
+import { watch, ref, defineEmits } from 'vue';
 import { useRoute } from 'vue-router';
-import { findSubCategoryFilter } from '@/api/category';
+import { findSubCategoryFilter } from '../../../../api/category';
 
 const route = useRoute();
 const filterData = ref<any>(null);
 const filterLoading = ref(false);
+const emit = defineEmits(['filter-change']);
 watch(
   () => route.params.id,
   (newVal) => {
@@ -72,6 +73,32 @@ watch(
     immediate: true
   }
 );
+
+// 筛选条件函数
+const getFilterParams = () => {
+  const obj = { brandId: null, attrs: <any>[] };
+  obj.brandId = filterData.value.brands.selectedBrand;
+  filterData.value.saleProperties.forEach((item: any) => {
+    if (item.selectedAttr) {
+      const prop = item.properties.find(
+        (prop: any) => prop.id === item.selectedAttr
+      );
+      obj.attrs.push({ groupName: item.name, propertyName: prop.name });
+    }
+  });
+  if (obj.attrs.length === 0) obj.attrs = null;
+  return obj;
+};
+const changeBrand = (id: any) => {
+  if (filterData.value.brands.selectedBrand === id) return;
+  filterData.value.brands.selectedBrand = id;
+  emit('filter-change', getFilterParams());
+};
+const changeProp = (item: any, id: any) => {
+  if (item.selectedAttr === id) return;
+  item.selectedAttr = id;
+  emit('filter-change', getFilterParams());
+};
 </script>
 
 <style scoped lang="less">

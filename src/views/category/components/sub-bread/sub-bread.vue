@@ -14,18 +14,11 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
+import { cate } from './sub-bread-config';
 import { useRoute } from 'vue-router';
-import { useCategory } from 'store/useCategory';
+import { useCategory } from '../../../../store/useCategory';
 const store = useCategory();
 const route = useRoute();
-type obj = {
-  id: number;
-  name: string;
-};
-interface cate {
-  top?: obj;
-  sub?: obj;
-}
 const category = computed(() => {
   const cate: cate = {};
   store.list.forEach((top: any) => {

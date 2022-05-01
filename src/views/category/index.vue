@@ -34,7 +34,7 @@
           </div>
           <div class="body">
             <template v-for="goods in sub.goods" :key="goods.id" :goods="goods">
-              <GoodsItem :goods="goods" />
+              <subItem :goods="goods" />
             </template>
           </div>
         </div>
@@ -46,10 +46,10 @@
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { useCategory } from 'store/useCategory';
-import { findBanner } from '@/api/home';
-import { findTopCategory } from '@/api/category';
-import GoodsItem from './components/goods-item/GoodsItem.vue';
+import { useCategory } from '../../store/useCategory';
+import { findBanner } from '../../api/home';
+import { findTopCategory } from '../../api/category';
+import subItem from './components/sub-item/sub-item.vue';
 const store = useCategory();
 const route = useRoute();
 // 获取轮播图数据

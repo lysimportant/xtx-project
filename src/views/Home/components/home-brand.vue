@@ -47,8 +47,8 @@
 import { ref } from 'vue';
 import HomePanel from './home-panel.vue';
 
-import { findBrand } from '@/api/home';
-import { useLazyData } from '@/hooks/index';
+import { findBrand } from '../../../api/home';
+import { useLazyData } from '../../../hooks/index';
 // 获取品牌的数据
 // const brands = ref([]);
 // findBrand(10).then((res: any) => {

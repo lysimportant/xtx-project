@@ -30,9 +30,9 @@
 </template>
 
 <script setup lang="ts">
-import { useLazyData } from '@/hooks';
+import { useLazyData } from '../../../hooks';
 import HomePanel from './home-panel.vue';
-import { findSpecial } from '@/api/home';
+import { findSpecial } from '../../../api/home';
 const { result, target } = useLazyData(findSpecial);
 </script>
 
