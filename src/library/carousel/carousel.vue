@@ -11,9 +11,22 @@
         v-for="(item, index) in props.sliders"
         :key="index"
       >
-        <RouterLink to="/">
+        <!-- 图片 -->
+        <RouterLink v-if="item.hrefUrl" :to="item.hrefUrl">
           <img :src="item.imgUrl" alt="" />
         </RouterLink>
+        <!-- 商品列表 -->
+        <div v-else class="slider">
+          <RouterLink
+            v-for="goods in item"
+            :key="goods.id"
+            :to="`/product/${goods.id}`"
+          >
+            <img :src="goods.picture" alt="" />
+            <p class="name ellipsis">{{ goods.name }}</p>
+            <p class="price">&yen;{{ goods.price }}</p>
+          </RouterLink>
+        </div>
       </li>
     </ul>
     <a href="javascript:;" class="carousel-btn prev"
@@ -186,6 +199,31 @@ onUnmounted(() => {
   &:hover {
     .carousel-btn {
       opacity: 1;
+    }
+  }
+}
+// 轮播商品
+.slider {
+  display: flex;
+  justify-content: space-around;
+  padding: 0 40px;
+  > a {
+    width: 240px;
+    text-align: center;
+    img {
+      padding: 20px;
+      width: 230px !important;
+      height: 230px !important;
+    }
+    .name {
+      font-size: 16px;
+      color: #666;
+      padding: 0 40px;
+    }
+    .price {
+      font-size: 16px;
+      color: #cf4444;
+      margin-top: 15px;
     }
   }
 }

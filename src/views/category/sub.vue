@@ -31,7 +31,7 @@ import { findSubCategoryGoods } from '../../api/category';
 import subBread from './components/sub-bread/sub-bread.vue';
 import subFilter from './components/sub-filter/sub-filter.vue';
 import subSort from './components/sub-sort/sub-sort.vue';
-import subItem from './components/sub-item/sub-Item.vue';
+import subItem from './components/sub-item/sub-item.vue';
 import LInfiniteLoading from '../../library/l-infinite-loading/l-infinite-loading.vue';
 const route = useRoute();
 //

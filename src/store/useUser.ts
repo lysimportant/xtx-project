@@ -9,7 +9,7 @@ export interface UserType {
     mobile: string;
     token: string;
   };
-  redirectUrl: string;
+  redirectUrl: any;
 }
 export const useUser = defineStore('useUser', {
   state(): UserType {
