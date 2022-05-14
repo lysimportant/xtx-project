@@ -39,9 +39,8 @@
           <input type="text" placeholder="搜索" />
         </div>
       </div>
-      <div class="cart">
-        <a href="javascript:;"><i class="iconfont icon-cart"></i><em>0</em></a>
-      </div>
+      <!-- 使用头部购物车组件 -->
+      <TopNavCart />
     </div>
   </div>
 </template>
@@ -50,14 +49,18 @@
 import { useUser } from '../../store/useUser';
 import { useRouter } from 'vue-router';
 import TopNavHeader from './TopNavHeader.vue';
+import TopNavCart from './TopNavCart.vue';
 import localCache from '../../utils/cache';
+import { useCart } from '../../store/useCart';
 const store = useUser();
+const CartStore = useCart();
 const router = useRouter();
 const { token } = localCache.getCache('user') ?? { token: '' };
 
 const navArr = ['我的订单', '会员中心', '帮助中心', '关于我们'];
 const logout = () => {
   window.localStorage.clear();
+  CartStore.list = [];
   store.setUser({});
   router.push('/login');
 };
@@ -106,29 +109,6 @@ const logout = () => {
     height: 132px;
     background: #fff;
     position: relative;
-    // 购物车
-    .cart {
-      position: relative;
-      text-align: center;
-      line-height: 132px;
-      left: -15px;
-      i {
-        font-size: 22px;
-      }
-      em {
-        font-style: normal;
-        position: absolute;
-        right: -15px;
-        top: 38%;
-        padding: 1px 6px;
-        line-height: 1;
-        background: #e26237;
-        color: #fff;
-        font-size: 12px;
-        border-radius: 10px;
-        font-family: Arial;
-      }
-    }
 
     // 搜索框
     .search {

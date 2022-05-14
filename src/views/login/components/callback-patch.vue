@@ -109,7 +109,9 @@ import Message from '../../../plugins/Toast';
 import { useUser } from '../../../store/useUser';
 import localCache from '../../../utils/cache';
 import router from '../../../router';
+import { useCart } from '../../../store/useCart';
 const store = useUser();
+const CartStore = useCart();
 const route = useRoute();
 const FormRef = ref();
 interface Props {
@@ -206,8 +208,10 @@ const loginFn = (res: any) => {
     token,
     mobile
   });
-  router.push(route.query.redirectUrl || '/');
-  return Message({ type: 'success', text: 'QQ完善信息完成' });
+  CartStore.mergeCart().then(() => {
+    router.push(store.redirectUrl || '/');
+    return Message({ type: 'success', text: 'QQ完善信息完成,页面跳转' });
+  });
 };
 </script>
 

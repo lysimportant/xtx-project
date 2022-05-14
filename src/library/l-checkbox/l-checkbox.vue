@@ -1,5 +1,5 @@
 <template>
-  <div class="xtx-checkbox" @click="changeChecked()">
+  <div class="xtx-checkbox" @click="changeChecked">
     <i v-if="checked" class="iconfont icon-checked"></i>
     <i v-else class="iconfont icon-unchecked"></i>
     <span v-if="$slots.default"><slot /></span>
@@ -14,7 +14,7 @@ export default {
 import { useVModel } from '@vueuse/core';
 import { defineProps, withDefaults, defineEmits } from 'vue';
 const emit = defineEmits(['update:modelValue', 'change']);
-const props = withDefaults(defineProps<{ modelValue: boolean }>(), {
+const props = withDefaults(defineProps<{ modelValue?: boolean }>(), {
   modelValue: false
 });
 // 使用useVModel实现双向数据绑定v-model指令
@@ -25,10 +25,12 @@ const props = withDefaults(defineProps<{ modelValue: boolean }>(), {
 const checked = useVModel(props, 'modelValue', emit);
 
 const changeChecked = () => {
-  // 更新父组件的值
-  checked.value = !checked.value;
-  // 让组件支持 change 事件
-  emit('change', checked.value);
+  const newVal = !checked.value;
+  // 通知父组件
+  checked.value = newVal;
+  // 让组件支持change事件
+  emit('change', newVal);
+  console.log('CheckBox组件被点击了', props.modelValue);
 };
 </script>
 <style scoped lang="less">

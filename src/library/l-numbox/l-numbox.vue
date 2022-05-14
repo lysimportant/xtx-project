@@ -12,15 +12,15 @@
 import { useVModel } from '@vueuse/core';
 import { defineProps, defineEmits, withDefaults } from 'vue';
 interface Props {
-  modelValue: number;
+  modelValue?: number;
   min?: number;
   max?: number;
-  label: string;
+  label?: string;
 }
 const props = withDefaults(defineProps<Props>(), {
   modelValue: 1,
   min: 1,
-  max: 10,
+  max: 100,
   label: ''
 });
 const emit = defineEmits(['change', 'update:modelValue']);

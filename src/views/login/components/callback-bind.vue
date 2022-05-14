@@ -59,6 +59,7 @@ import { Field, Form } from 'vee-validate';
 import { useIntervalFn } from '@vueuse/core';
 import Message from '../../../plugins/Toast';
 import { useUser } from '../../../store/useUser';
+import { useCart } from '../../../store/useCart';
 import localCache from '../../../utils/cache';
 import router from '../../../router';
 const store = useUser();
@@ -67,6 +68,7 @@ interface Props {
   unionId: string;
 }
 const props = defineProps<Props>();
+const CartStore = useCart();
 const nickname = ref('');
 const avatar = ref('');
 const mobile = ref('');
@@ -149,8 +151,10 @@ const loginFn = (res: any) => {
     token,
     mobile
   });
-  router.push(route.query.redirectUrl || '/');
-  return Message({ type: 'success', text: 'QQ登录成功,页面跳转' });
+  CartStore.mergeCart().then(() => {
+    router.push(store.redirectUrl || '/');
+    return Message({ type: 'success', text: 'QQ登录成功,页面跳转' });
+  });
 };
 </script>
 <style scoped lang="less">

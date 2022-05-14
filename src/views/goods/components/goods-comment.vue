@@ -1,95 +1,103 @@
 <template>
-  <div class="goods-comment" v-if="commentInfo">
-    <div class="head">
-      <div class="data">
-        <p>
-          <span>{{ commentInfo.salesCount }}</span
-          ><span>人购买</span>
-        </p>
-        <p>
-          <span>{{ commentInfo.praisePercent }}</span
-          ><span>好评率</span>
-        </p>
-      </div>
-      <div class="tags">
-        <div class="dt">大家都在说：</div>
-        <div class="dd">
-          <template v-for="(tag, index) in commentInfo.tags" :key="index">
-            <a
-              href="javascript:;"
-              @click="changeTag(index)"
-              :class="{ active: currentTag === index }"
-              >{{ tag.title }} ({{ tag.tagCount }})</a
-            >
-          </template>
+  <div ref="sortRef" class="goods-comment">
+    <template v-if="commentInfo">
+      <div class="head">
+        <div class="data">
+          <p>
+            <span>{{ commentInfo.salesCount }}</span
+            ><span>人购买</span>
+          </p>
+          <p>
+            <span>{{ commentInfo.praisePercent }}</span
+            ><span>好评率</span>
+          </p>
         </div>
-      </div>
-    </div>
-    <!-- 排序 -->
-    <div class="sort">
-      <span>排序：</span>
-      <a
-        @click="changeSort(null)"
-        href="javascript:;"
-        :class="{ active: reqParams.sortField === null }"
-        >默认</a
-      >
-      <a
-        @click="changeSort('praiseCount')"
-        href="javascript:;"
-        :class="{ active: reqParams.sortField === 'praiseCount' }"
-        >最热</a
-      >
-      <a
-        @click="changeSort('createTime')"
-        href="javascript:;"
-        :class="{ active: reqParams.sortField === 'createTime' }"
-        >最新</a
-      >
-    </div>
-    <!-- 列表 -->
-    <div class="list" v-if="commentList">
-      <div class="item" v-for="item in commentList" :key="item.id">
-        <div class="user">
-          <img :src="item.member.avatar" alt="" />
-          <span>{{ formatNickname(item.member.nickname) }}</span>
-        </div>
-        <div class="body">
-          <div class="score">
-            <i v-for="i in item.score" class="iconfont icon-wjx01"></i>
-            <i v-for="i in 5 - item.score" class="iconfont icon-wjx02"></i>
-            <span class="attr">{{ formatSpecs(item.orderInfo.specs) }}</span>
-          </div>
-          <div class="text">{{ item.content }}</div>
-          <!-- 评论图片组件 -->
-          <GoodsCommentImage
-            v-if="item.pictures.length"
-            :pictures="item.pictures"
-          />
-          <div class="time">
-            <span>{{ item.createTime }}</span>
-            <span class="zan"
-              ><i class="iconfont icon-dianzan"></i>{{ item.praiseCount }}</span
-            >
+        <div class="tags">
+          <div class="dt">大家都在说：</div>
+          <div class="dd">
+            <template v-for="(tag, index) in commentInfo.tags" :key="index">
+              <a
+                href="javascript:;"
+                @click="changeTag(index)"
+                :class="{ active: currentTag === index }"
+                >{{ tag.title }} ({{ tag.tagCount }})</a
+              >
+            </template>
           </div>
         </div>
       </div>
-    </div>
-    <LPagination />
+      <!-- 排序 -->
+      <div class="sort">
+        <span>排序：</span>
+        <a
+          @click="changeSort(null)"
+          href="javascript:;"
+          :class="{ active: reqParams.sortField === null }"
+          >默认</a
+        >
+        <a
+          @click="changeSort('praiseCount')"
+          href="javascript:;"
+          :class="{ active: reqParams.sortField === 'praiseCount' }"
+          >最热</a
+        >
+        <a
+          @click="changeSort('createTime')"
+          href="javascript:;"
+          :class="{ active: reqParams.sortField === 'createTime' }"
+          >最新</a
+        >
+      </div>
+      <!-- 列表 -->
+      <div class="list" v-if="commentList">
+        <div class="item" v-for="item in commentList" :key="item.id">
+          <div class="user">
+            <img :src="item.member.avatar" alt="" />
+            <span>{{ formatNickname(item.member.nickname) }}</span>
+          </div>
+          <div class="body">
+            <div class="score">
+              <i v-for="i in item.score" class="iconfont icon-wjx01"></i>
+              <i v-for="i in 5 - item.score" class="iconfont icon-wjx02"></i>
+              <span class="attr">{{ formatSpecs(item.orderInfo.specs) }}</span>
+            </div>
+            <div class="text">{{ item.content }}</div>
+            <!-- 评论图片组件 -->
+            <GoodsCommentImage
+              v-if="item.pictures.length"
+              :pictures="item.pictures"
+            />
+            <div class="time">
+              <span>{{ item.createTime }}</span>
+              <span class="zan"
+                ><i class="iconfont icon-dianzan"></i
+                >{{ item.praiseCount }}</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <LPagination
+        v-if="total"
+        @change="change"
+        v-model:total="total"
+        v-model:current-page="reqParams.page"
+        v-model:page-size="reqParams.pageSize"
+      />
+    </template>
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, inject, reactive, watch, computed } from 'vue';
+import { ref, inject, reactive, watch, onMounted, nextTick } from 'vue';
 import GoodsCommentImage from './goods-comment-image.vue';
 
 import {
   findGoodsCommentInfo,
   findGoodsCommentList
 } from '../../../api/product';
-import LPagination from '../../../library/l-pagination/l-pagination.vue';
-
+const sortRef: any = ref(null);
+onMounted(() => {});
 const goods: any = inject('goods');
-
 const formatSpecs = (specs: any) => {
   return specs
     .reduce((p: any, n: any) => `${p} ${n.name}: ${n.nameValue}`, '')
@@ -106,17 +114,35 @@ const reqParams: any = reactive({
   tag: null,
   sortField: null
 });
+const total = ref(0);
 const commentList: any = ref();
 watch(
   reqParams,
   () => {
-    findGoodsCommentList(goods.id, reqParams).then(({ data: res }) => {
+    findGoodsCommentList(goods.value.id, reqParams).then(({ data: res }) => {
       commentList.value = res.result.items;
+      total.value = res.result.counts;
     });
   },
   { immediate: true }
 );
-
+const change = () => {
+  changeScorll();
+};
+// 滚动事件
+const changeScorll = () => {
+  let timer: any = null;
+  let targetTop = sortRef.value.offsetTop;
+  timer = setInterval(() => {
+    let cureentTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    let speed = Math.floor(-cureentTop / 9);
+    document.documentElement.scrollTop = cureentTop + speed;
+    if (cureentTop <= targetTop + 200) {
+      clearInterval(timer);
+    }
+  }, 50);
+};
 // 改变排序
 const changeSort = (type: any) => {
   reqParams.sortField = type;

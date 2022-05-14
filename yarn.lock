@@ -52,6 +52,11 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.51.tgz#cfd70924a25a3fd32b218e5e420e6897e1ac4f40"
   integrity sha512-CuPgU6f3eT/XgKKPqKd/gLZV1Xmvf1a2R5POBOGQa6uv82xpls89HU5zKeVoyR8XzHd1RGNOlQlvUe3CFkjWNQ==
 
+"@types/js-cookie@^3.0.1":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@types/js-cookie/-/js-cookie-3.0.2.tgz#451eaeece64c6bdac8b2dde0caab23b085899e0d"
+  integrity sha512-6+0ekgfusHftJNYpihfkMu8BWdeHs9EOJuGcSofErjstGPfPGEu9yTu4t460lTzzAMl2cM5zngQJqPMHbbnvYA==
+
 "@types/node@^17.0.24":
   version "17.0.24"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.24.tgz#20ba1bf69c1b4ab405c7a01e950c4f446b05029f"
@@ -809,6 +814,22 @@ pify@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
+
+pinia-persistedstate-plugin@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/pinia-persistedstate-plugin/-/pinia-persistedstate-plugin-0.1.0.tgz#37f0c8a0e93e7ff529d8867e536365274b4bb8d4"
+  integrity sha512-ToKR/EJzhhXElQ5YL8PVVY4CqLJjywxszAJjOCgprjmIVkTrPBsEOY4b/ATOzHQc1TtuaJs/3MJuoCpA3pv8Ew==
+  dependencies:
+    "@types/js-cookie" "^3.0.1"
+    pinia "^2.0.12"
+
+pinia@^2.0.12:
+  version "2.0.14"
+  resolved "https://registry.yarnpkg.com/pinia/-/pinia-2.0.14.tgz#0837898c20291ebac982bbfca95c8d3c6099925f"
+  integrity sha512-0nPuZR4TetT/WcLN+feMSjWJku3SQU7dBbXC6uw+R6FLQJCsg+/0pzXyD82T1FmAYe0lsx+jnEDQ1BLgkRKlxA==
+  dependencies:
+    "@vue/devtools-api" "^6.1.4"
+    vue-demi "*"
 
 pinia@^2.0.13:
   version "2.0.13"

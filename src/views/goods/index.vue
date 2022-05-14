@@ -27,7 +27,7 @@
           <!-- 数量选择组件 -->
           <LNumbox v-model="defaultCount" label="数量" :max="goods.inventory" />
           <!-- 按钮组件 -->
-          <l-button type="primary" style="margin-top: 20px"
+          <l-button type="primary" style="margin-top: 20px" @click="intserCart"
             >加入购物车</l-button
           >
         </div>
@@ -55,7 +55,7 @@
 <script lang="ts" setup>
 import { ref, watch, nextTick, provide } from 'vue';
 import { useRoute } from 'vue-router';
-
+import { useCart } from '../../store/useCart';
 import GoodsRelevant from './components/goods-relevant.vue';
 import GoodsImage from './components/goods.image.vue';
 import GoodsSales from './components/goods-sales.vue';
@@ -65,9 +65,9 @@ import GoodsHot from './components/goods-hot.vue';
 import LNumbox from '../../library/l-numbox/l-numbox.vue';
 import GoodsTabs from './components/goods-tabs.vue';
 import GoodsWarn from './components/goods-warn.vue';
-
+import Message from '../../plugins/Toast';
 import { findGoods } from '../../api/product';
-
+const store = useCart();
 const route = useRoute();
 // 选择商品的默认数量为1
 const defaultCount = ref(1);
@@ -79,6 +79,7 @@ const changeSku = (sku: any) => {
     goods.value.oldPrice = sku.oldPrice;
     goods.value.inventory = sku.inventory;
   }
+  currentSku.value = sku;
 };
 
 // 获取商品详情的函数
@@ -88,7 +89,6 @@ const useGoods = () => {
     () => route.params.id,
     (newVal) => {
       if (newVal && `/product/${newVal}` === route.path) {
-        console.log(route.params.id, typeof route.params.id);
         findGoods(route.params.id as string).then(
           ({ data: { result: res } }) => {
             // 让商品数据为null然后使用v-if的组件可以重新销毁和创建
@@ -104,8 +104,34 @@ const useGoods = () => {
   );
   return data;
 };
+
 const goods: any = useGoods();
 provide('goods', goods);
+const currentSku: any = ref();
+// 加入购物车
+const intserCart = () => {
+  // 字段 id
+  if (currentSku.value && currentSku.value.skuId) {
+    const { skuId, specsText: attrsText, inventory: stock } = currentSku.value;
+    const { id, name, price, mainPictures } = goods.value;
+    store.insertCart({
+      skuId,
+      attrsText,
+      stock,
+      id,
+      price,
+      name,
+      nowPrice: price,
+      picture: mainPictures[0],
+      selected: true,
+      isEffective: true,
+      count: defaultCount.value
+    });
+    Message({ type: 'success', text: '加入购物车成功' });
+  } else {
+    Message({ type: 'warn', text: '请选择完整的规格' });
+  }
+};
 </script>
 <style scoped lang="less">
 .xtx-goods-page {

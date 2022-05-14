@@ -40,11 +40,14 @@ import LoginHeader from './components/login-header';
 import LoginFooter from './components/login-footer';
 import CallbackBind from './components/callback-bind';
 import CallbackPatch from './components/callback-patch';
+
 import { userQQLogin } from '../../api/user';
 import localCache from '../../utils/cache';
 import router from '../../router';
 import Message from '../../plugins/Toast';
 import { useUser } from '../../store/useUser';
+import { useCart } from '../../store/useCart';
+const CartStore = useCart();
 const isBind = ref(true);
 const hasAccount = ref(true);
 const nickname = ref(null);
@@ -72,10 +75,10 @@ if (QC.Login.check()) {
           token,
           mobile
         });
-        //  2. 跳转到来源页或者首页
-        router.push(store.redirectUrl);
-        //  3. 成功提示
-        return Message({ type: 'success', text: 'QQ登录成功,页面跳转' });
+        CartStore.mergeCart().then(() => {
+          router.push(store.redirectUrl || '/');
+          return Message({ type: 'success', text: 'QQ登录成功,页面跳转' });
+        });
       })
       .catch((e) => {
         // 登录失败

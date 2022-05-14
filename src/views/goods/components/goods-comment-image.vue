@@ -44,30 +44,29 @@ const currImage: any = ref(null);
       }
     }
   }
-
 }
-  .preview {
-    width: 480px;
-    height: 480px;
-    border: 1px solid #e4e4e4;
-    background: #f8f8f8;
-    margin-bottom: 20px;
-    position: relative;
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-    i {
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 30px;
-      height: 30px;
-      background: rgba(0, 0, 0, 0.2);
-      color: #fff;
-      text-align: center;
-      line-height: 30px;
-    }
+.preview {
+  width: 480px;
+  height: 480px;
+  border: 1px solid #e4e4e4;
+  background: #f8f8f8;
+  margin-bottom: 20px;
+  position: relative;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
+  i {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30px;
+    height: 30px;
+    background: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    text-align: center;
+    line-height: 30px;
+  }
+}
 </style>

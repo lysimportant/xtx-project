@@ -18,6 +18,10 @@ const routes: RouteRecordRaw[] = [
       {
         path: '/product/:id',
         component: () => import('views/goods/index.vue')
+      },
+      {
+        path: '/cart',
+        component: () => import('views/cart/index.vue')
       }
     ]
   },

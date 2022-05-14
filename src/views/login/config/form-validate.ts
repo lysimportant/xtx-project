@@ -40,8 +40,7 @@ export default {
     if (result.valid) return '用户名已存在';
     return true;
   },
-  rePassword(value: string, { form }) {
-    console.log(form);
+  rePassword(value: string, { form }: any) {
     if (!value) return '请输入密码';
     if (!/^\w{6,24}$/.test(value)) return '密码是6-24个字符';
     // 校验密码是否一致  form表单数据对象

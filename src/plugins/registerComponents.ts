@@ -11,7 +11,10 @@ import LCity from '../library/l-city/l-city.vue';
 import LNumbox from '../library/l-numbox/l-numbox.vue';
 import LButton from '../library/l-button/l-button.vue';
 import LPagintion from '../library/l-pagination/l-pagination.vue';
+import LConfirm from '../library/l-confirm/l-confirm.vue';
+
 import Message from './Toast';
+import Confirm from './confirm';
 const components = [
   Skeleton,
   Carousel,
@@ -22,7 +25,8 @@ const components = [
   LCity,
   LNumbox,
   LButton,
-  LPagintion
+  LPagintion,
+  LConfirm
 ];
 
 export default function (app: App) {
@@ -30,4 +34,5 @@ export default function (app: App) {
     app.component(component.name, component);
   }
   app.config.globalProperties.$message = Message;
+  app.config.globalProperties.$confirm = Confirm;
 }

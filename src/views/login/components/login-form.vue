@@ -126,7 +126,7 @@
 import { reactive, ref, watch, onUnmounted, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import router from '../../../router';
-
+import { useCart } from '../../../store/useCart';
 // 第三方校验插件
 import { Form, Field } from 'vee-validate';
 // 校验配置
@@ -145,6 +145,7 @@ import { useUser } from '../../../store/useUser';
 import { useIntervalFn } from '@vueuse/core';
 
 import localCache from '../../../utils/cache';
+const CartStore = useCart();
 const FormRef = ref();
 const store = useUser();
 const route = useRoute();
@@ -174,7 +175,6 @@ watch(isMsgLogin, () => {
 const login = async () => {
   try {
     if (!isMsgLogin.value) {
-      console.log('帐号登录');
       const { valid: account, errors: accountError } =
         await FormRef.value.validateField('account');
 
@@ -193,7 +193,6 @@ const login = async () => {
         loginFn(res);
       }
     } else {
-      console.log('手机登录');
       const { valid: mobile, errors: MError } =
         await FormRef.value.validateField('mobile');
       const { valid: code, errors: CError } = await FormRef.value.validateField(
@@ -229,8 +228,15 @@ const loginFn = (res: any) => {
     token,
     mobile
   });
-  router.push(route.query.redirectUrl || '/');
-  return Message({ type: 'success', text: '登录成功,页面跳转' });
+
+  CartStore.mergeCart()
+    .then(() => {
+      router.push((route.query.redirectUrl as string) || '/');
+      return Message({ type: 'success', text: '登录成功,页面跳转' });
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 };
 // 发送验证码
 const time = ref(0);
