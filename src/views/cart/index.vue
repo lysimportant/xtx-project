@@ -156,7 +156,11 @@ import CartSku from './components/cart-sku.vue';
 import { useCart } from '../../store/useCart';
 import Message from '../../plugins/Toast';
 import confirm from '../../plugins/confirm';
+import { useUser } from '../../store/useUser';
+import { useRouter } from 'vue-router';
 const store = useCart();
+const router = useRouter();
+const userStore = useUser();
 // 删除多个商品
 const batchDeleteCart = (flag?: any) => {
   confirm({
@@ -198,8 +202,26 @@ const updateCartSku = (skuId: any, newSku: any) => {
 };
 // 点击下单
 const submit = () => {
+  // 选中商品没有
+  if (store.selectedList.length < 1) {
+    return Message({ type: 'warn', text: '至少选中一件商品进行结算!' });
+  }
+  // 是否登录
+  if (!userStore.profile.token) {
+    confirm({ text: '下单结算需要进行登录,确认现在登录吗?' })
+      .then(() => {
+        //
+        return router.push('/member/checkout');
+      })
+      .catch((e) => {
+        return console.log(e);
+      });
+  } else {
+    router.push('/member/checkout');
+  }
 
-}
+  //
+};
 </script>
 <style scoped lang="less">
 .tc {

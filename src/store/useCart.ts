@@ -190,7 +190,6 @@ export const useCart = defineStore('useCart', {
             return findCart();
           })
           .then(({ data }) => {
-            console.log(data);
             this.list = data.result;
           });
       } else {

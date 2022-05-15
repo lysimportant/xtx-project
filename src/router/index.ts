@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import type { RouteRecordRaw } from 'vue-router';
+import useStore from '../store/useUser';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -22,6 +23,10 @@ const routes: RouteRecordRaw[] = [
       {
         path: '/cart',
         component: () => import('views/cart/index.vue')
+      },
+      {
+        path: '/member/checkout',
+        component: () => import('views/member/pay/checkout.vue')
       }
     ]
   },
@@ -43,6 +48,16 @@ const router = createRouter({
   scrollBehavior() {
     return { top: 0, y: 0 };
   }
+});
+// 路由的前置导航
+router.beforeEach((to, from, next) => {
+  // 需要登录的路由: 地址是以 /member 开头
+  const { profile } = useStore();
+  if (profile && !profile.token && to.path.startsWith('/member')) {
+    // encodeURIComponent 特殊字符串转为URL编码 以防错误
+    next('/login?redirectUrl=' + encodeURIComponent(to.fullPath));
+  }
+  next();
 });
 
 export default router;

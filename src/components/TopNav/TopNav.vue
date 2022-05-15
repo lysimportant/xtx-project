@@ -60,7 +60,7 @@ const { token } = localCache.getCache('user') ?? { token: '' };
 const navArr = ['我的订单', '会员中心', '帮助中心', '关于我们'];
 const logout = () => {
   window.localStorage.clear();
-  CartStore.list = [];
+  // CartStore.list = [];
   store.setUser({});
   router.push('/login');
 };

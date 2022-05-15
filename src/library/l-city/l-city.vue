@@ -1,7 +1,9 @@
 <template>
   <div class="xtx-city" ref="target">
     <div class="select" @click="toggleDialog" :class="{ active }">
-      <span class="placeholder" v-if="!props.fullLocation">请选择配送地址</span>
+      <span class="placeholder" v-if="!props.fullLocation">{{
+        props.placeholder
+      }}</span>
       <span class="value" v-else>{{
         props.fullLocation ?? changeResult.fullLocation
       }}</span>
@@ -31,7 +33,7 @@ export default {
 import { computed, ref, defineProps, reactive, defineEmits } from 'vue';
 import { onClickOutside } from '@vueuse/core';
 import axios from 'axios';
-const props = defineProps<{ fullLocation: any }>();
+const props = defineProps<{ fullLocation: any; placeholder: string }>();
 const emit = defineEmits(['change']);
 // import
 // 控制展开收起,默认收起

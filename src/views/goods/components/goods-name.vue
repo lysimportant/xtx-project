@@ -12,7 +12,14 @@
     </dl>
     <dl>
       <dt>配送</dt>
-      <dd>至 <LCity :fullLocation="fullLocation" @change="changeCity" /></dd>
+      <dd>
+        至
+        <LCity
+          placeholder="请选择配送地址"
+          :fullLocation="fullLocation"
+          @change="changeCity"
+        />
+      </dd>
     </dl>
     <dl>
       <dt>服务</dt>

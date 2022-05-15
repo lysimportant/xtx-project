@@ -39,3 +39,7 @@ export const setupStore = () => {
   const user = localCache.getCache('user');
   useUser().setUser(user);
 };
+
+export default function useStore() {
+  return useUser();
+}

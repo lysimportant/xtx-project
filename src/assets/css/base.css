@@ -1,0 +1,154 @@
+.container {
+  width: 1240px;
+  margin: 0 auto;
+}
+.fade-right-enter-to,
+.fade-right-leave-from {
+  opacity: 1;
+  transform: none;
+}
+.fade-right-enter-active,
+.fade-right-leave-active {
+  transition: all 0.5s;
+}
+.fade-right-enter-from,
+.fade-right-leave-to {
+  opacity: 0;
+  transform: translateX(20px);
+}
+.fade-leave-active {
+  position: absolute;
+  width: 100%;
+  transition: opacity 0.5s 0.2s;
+  z-index: 1;
+}
+.fade-leave-to {
+  opacity: 0;
+}
+.ellipsis-2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* 弹性伸缩盒子模型显示*/
+  display: -webkit-box;
+  /* 限制在一个块元素显示的文本的行数*/
+  -webkit-line-clamp: 2;
+  /*大设置或检索伸缩盒对象的子元素的排列方式*/
+  -webkit-box-orient: vertical;
+}
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+}
+body {
+  min-width: 1240px;
+}
+img {
+  width: 100%;
+  height: 100%;
+  vertical-align: middle;
+}
+input {
+  outline-style: none;
+  border: 0;
+  outline: none;
+}
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+/* 给父类添加一个 clearfix */
+.clearfix:before,
+.clearfix:after {
+  content: '';
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+}
+.clearfix {
+  *zoom: 1;
+}
+.xtx-form {
+  padding: 50px 0;
+}
+.xtx-form-item {
+  display: flex;
+  align-items: center;
+  width: 700px;
+  margin: 0 auto;
+  padding-bottom: 25px;
+}
+.xtx-form-item .label {
+  width: 180px;
+  padding-right: 10px;
+  text-align: right;
+  color: #999;
+}
+.xtx-form-item .label ~ .field {
+  margin-left: 0;
+}
+.xtx-form-item .field {
+  width: 320px;
+  height: 50px;
+  position: relative;
+  margin-left: 190px;
+}
+.xtx-form-item .field .icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 40px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  color: #999;
+}
+.xtx-form-item .field .icon ~ .input {
+  padding-left: 40px;
+}
+.xtx-form-item .field .input {
+  border: 1px solid #e4e4e4;
+  width: 320px;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 10px;
+}
+.xtx-form-item .field .input.err {
+  border-color: #cf4444;
+}
+.xtx-form-item .field .input:focus,
+.xtx-form-item .field .input:active {
+  border-color: #27ba9b;
+}
+.xtx-form-item .error {
+  width: 180px;
+  padding-left: 10px;
+  color: #cf4444;
+}
+.xtx-form .submit {
+  width: 320px;
+  border-radius: 4px;
+  background: #27ba9b;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  font-size: 16px;
+  color: #fff;
+  display: block;
+  margin: 0 auto;
+}

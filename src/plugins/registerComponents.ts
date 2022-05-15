@@ -12,7 +12,7 @@ import LNumbox from '../library/l-numbox/l-numbox.vue';
 import LButton from '../library/l-button/l-button.vue';
 import LPagintion from '../library/l-pagination/l-pagination.vue';
 import LConfirm from '../library/l-confirm/l-confirm.vue';
-
+import LDialog from '../library/l-dialog/l-dialog.vue';
 import Message from './Toast';
 import Confirm from './confirm';
 const components = [
@@ -26,7 +26,8 @@ const components = [
   LNumbox,
   LButton,
   LPagintion,
-  LConfirm
+  LConfirm,
+  LDialog
 ];
 
 export default function (app: App) {
