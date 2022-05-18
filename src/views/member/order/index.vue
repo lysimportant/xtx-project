@@ -13,7 +13,13 @@
     <div class="order-list">
       <div v-if="loading" class="loading"></div>
       <div class="none" v-if="!loading && orderList.length === 0">暂无数据</div>
-      <OrderItem v-for="item in orderList" :order="item" :key="item.id" />
+      <OrderItem
+        @on-cancel="handleCancel"
+        @on-delete="handleDelete"
+        v-for="item in orderList"
+        :order="item"
+        :key="item.id"
+      />
     </div>
     <!-- 分页 -->
     <lPagination
@@ -23,16 +29,21 @@
       :total="total"
       @current-change="reqParams.page = $event"
     ></lPagination>
+    <!-- 取消订单 -->
+    <OrderCancel ref="orderCancelRef" />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, reactive, watch } from 'vue';
-import { findOrderList } from '@/api/order';
+import { findOrderList, deleteOrder } from '@/api/order';
 import Tabs from '../../../library/l-tabs/l-tabs.vue';
 import TabsPanel from '../../../library/l-tabs/l-tabs-panel.tsx';
 import OrderItem from './components/order-item.vue';
+import OrderCancel from './components/order-cancel.vue';
 import lPagination from '../../../library/l-pagination/l-pagination.vue';
+import confirm from '../../../plugins/confirm';
+import Message from '@/plugins/Toast';
 import { orderStatus } from '@/api/constant';
 // import TabsPanel from '../../../library/l-tabs/l-tabs-panel.vue';
 const activeName = ref('all');
@@ -50,28 +61,46 @@ const reqParams = reactive({
   pageSize: 5,
   orderState: 0
 });
-// 分页点击
-// const currentChange = (page: number) => {
-//   reqParams.page = page;
-// };
+
 // 总页数
 const total = ref(0);
 // 订单列表
 const orderList = ref([]);
+// 获取订单的所有数据
+const getOrdetList = () => {
+  loading.value = true;
+  // 查询订单
+  findOrderList(reqParams).then(({ data }: any) => {
+    orderList.value = data.result.items;
+    total.value = data.result.counts;
+    loading.value = false;
+  });
+};
 // 检测Tabs变化请求对应那个数据
 watch(
   reqParams,
   () => {
-    loading.value = true;
-    // 查询订单
-    findOrderList(reqParams).then(({ data }: any) => {
-      orderList.value = data.result.items;
-      total.value = data.result.counts;
-      loading.value = false;
-    });
+    getOrdetList();
   },
   { immediate: true }
 );
+// 表单处理 - 取消订单
+const orderCancelRef = ref<InstanceType<typeof OrderCancel>>();
+// 取消删除
+const handleCancel = (order: any) => {
+  orderCancelRef.value?.open(order);
+};
+// 删除订单
+const handleDelete = (order: any) => {
+  confirm({ text: '亲,您确认删除该订单吗?' })
+    .then(() => {
+      deleteOrder(order.id).then(() => {
+        Message({ type: 'success', text: '删除成功' });
+        getOrdetList();
+      });
+    })
+    .catch((e) => {});
+};
 </script>
 <script lang="ts">
 export default {

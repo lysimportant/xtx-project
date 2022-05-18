@@ -3,17 +3,14 @@
     <div class="head">
       <span>下单时间：{{ order.createTime }}</span>
       <span>订单编号：{{ order.id }}</span>
-      <span
-        class="down-time"
-        v-if="order.orderState === 1 && order.countdown > -1"
-      >
+      <span class="down-time" v-if="order.orderState === 1">
         <i class="iconfont icon-down-time"></i>
         <b>付款截止：{{ timeText }}</b>
       </span>
-      <span class="down-time" v-else>订单已超时</span>
       <a
         href="javascript:'"
         class="del"
+        @click="emit('on-delete', order)"
         v-if="[5, 6].includes(order.orderState)"
         >删除</a
       >
@@ -70,9 +67,15 @@
         <LButton v-if="order.orderState === 3" type="primary" size="small"
           >确认收货</LButton
         >
-        <p><a href="javascript:;">查看详情</a></p>
-        <p v-if="order.orderState === 1 || order.countdown < 0">
-          <a href="javascript:;">取消订单</a>
+        <p>
+          <a
+            href="javascript:;"
+            @click="$router.push(`/member/order/${order.id}`)"
+            >查看详情</a
+          >
+        </p>
+        <p v-if="order.orderState === 1">
+          <a href="javascript:;" @click="emit('on-cancel', order)">取消订单</a>
         </p>
         <p v-if="[2, 3, 4, 5].includes(order.orderState)">
           <a href="javascript:;">再次购买</a>
@@ -85,10 +88,10 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { defineProps, withDefaults } from 'vue';
+import { defineProps, withDefaults, defineEmits } from 'vue';
 import { orderStatus } from '@/api/constant';
 import { usePayTime } from '../../../../hooks';
-
+const emit = defineEmits(['on-cancel', 'on-delete', 'on-logistics']);
 interface Props {
   order: any;
 }
