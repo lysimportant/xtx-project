@@ -1,5 +1,8 @@
 <template>
-  <LDialog :title='`${formData.id ? "修改" : "添加"}收货地址`' v-model:visible="dialogVisible">
+  <LDialog
+    :title="`${formData.id ? '修改' : '添加'}收货地址`"
+    v-model:visible="dialogVisible"
+  >
     <div class="address-edit">
       <div class="xtx-form">
         <div class="xtx-form-item">
@@ -121,23 +124,23 @@ const changeCity = (result: any) => {
 };
 // 数据提交
 const submit = () => {
-if (formData.id) {
-  editAddress(formData).then(() => {
-    emit('on-success', formData);
-    dialogVisible.value = false;
-    Message({ type: 'success', text: '修改收货地址成功~' })
-  })
-}else {
-  addAddress(formData).then(({ data: { result: res } }) => {
-    // 1. 校验
-    // 2. 发送了请求
-    // 添加ID
-    formData.id = res.id;
-    emit('on-success', formData);
-    dialogVisible.value = false;
-    Message({ type: 'success', text: '添加收货地址成功~' });
-  });
-}
+  if (formData.id) {
+    editAddress(formData).then(() => {
+      emit('on-success', formData);
+      dialogVisible.value = false;
+      Message({ type: 'success', text: '修改收货地址成功~' });
+    });
+  } else {
+    addAddress(formData).then(({ data: { result: res } }) => {
+      // 1. 校验
+      // 2. 发送了请求
+      // 添加ID
+      formData.id = res.id;
+      emit('on-success', formData);
+      dialogVisible.value = false;
+      Message({ type: 'success', text: '添加收货地址成功~' });
+    });
+  }
 };
 defineExpose({
   open

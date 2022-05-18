@@ -1,19 +1,22 @@
 <template>
-  <div class="xtx-pagination" @click="emit('change')">
-    <a @click="currentPage--" v-if="currentPage > 1" href="javascript:;"
+  <div class="xtx-pagination">
+    <a
+      @click="changeCurrent(currentPage - 1)"
+      v-if="currentPage > 1"
+      href="javascript:;"
       >上一页</a
     >
     <a v-else href="javascript:;" class="disabled">上一页</a>
     <span
       :style="{ cursor: 'pointer' }"
       v-if="pager.start > 1"
-      @click="currentPage = 1"
+      @click="changeCurrent(1)"
       >...</span
     >
     <template v-for="i in pager.btnArr" :key="i">
       <a
         href="javascript:;"
-        @click="currentPage = i"
+        @click="changeCurrent(i)"
         :class="{ active: i === currentPage }"
         >{{ i }}</a
       >
@@ -21,12 +24,12 @@
     <span
       :style="{ cursor: 'pointer' }"
       v-if="pager.end < pager.pageCount"
-      @click="currentPage = pager.pageCount"
+      @click="changeCurrent(pager.pageCount)"
       >...</span
     >
     <a
       v-if="currentPage < pager.pageCount"
-      @click="currentPage++"
+      @click="changeCurrent(currentPage + 1)"
       href="javascript:;"
       >下一页</a
     >
@@ -57,11 +60,17 @@ const emit = defineEmits([
   'update:currentPage',
   'update:total',
   'update:pageSize',
-  'change'
+  'current-change'
 ]);
 const currentPage = useVModel(props, 'currentPage', emit);
 const total = useVModel(props, 'total', emit);
 const pageSize = useVModel(props, 'pageSize', emit);
+
+const changeCurrent = (page: number) => {
+  if (currentPage.value !== page) {
+    emit('current-change', page);
+  }
+};
 // 1. 约定按钮的数量为5,如果成为动态需要变为响应式数据
 const count = 5;
 // 2. 当前显示的页码

@@ -5,9 +5,11 @@
         <ul class="clearfix">
           <template v-if="token">
             <li>
-              <a href="javascript:;" class="login-left"
+              <RouterLink to="/member" class="login-left"
                 ><i class="iconfont icon-user"></i>
-                {{ store.profile.nickname ?? store.profile.account }}</a
+                {{
+                  store.profile.nickname ?? store.profile.account
+                }}</RouterLink
               >
             </li>
             <li><a href="javascript:;" @click="logout">退出登录</a></li>

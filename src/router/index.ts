@@ -1,4 +1,5 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHashHistory, RouterView } from 'vue-router';
+import { render, h } from 'vue';
 import type { RouteRecordRaw } from 'vue-router';
 import useStore from '../store/useUser';
 const routes: RouteRecordRaw[] = [
@@ -27,6 +28,39 @@ const routes: RouteRecordRaw[] = [
       {
         path: '/member/checkout',
         component: () => import('views/member/pay/checkout.vue')
+      },
+      {
+        path: '/member/pay',
+        component: () => import('views/member/pay/index.vue')
+      },
+      {
+        path: '/pay/callback',
+        component: () => import('views/member/pay/result.vue')
+      },
+      {
+        path: '/member',
+        component: () => import('views/member/Lazyout.vue'),
+        children: [
+          {
+            path: '/member',
+            component: () => import('views/member/home/index.vue')
+          },
+          // Vue3的 导航样式激活 模糊匹配需要优化配置
+          {
+            path: '/member/order',
+            component: { render: () => h(RouterView) },
+            children: [
+              {
+                path: '',
+                component: () => import('views/member/order/index.vue')
+              },
+              {
+                path: ':id',
+                component: () => import('views/member/order/detail.vue')
+              }
+            ]
+          }
+        ]
       }
     ]
   },

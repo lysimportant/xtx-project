@@ -7,6 +7,9 @@ import registerGlobalComponents from './plugins';
 import('./assets/css/index.less');
 import App from './App.vue';
 import { setupStore } from './store/useUser';
+// mockjs
+import '@/mock';
+
 const app = createApp(App);
 app.use(registerGlobalComponents);
 const store = createPinia();

@@ -15,7 +15,10 @@
           }}
         </li>
         <li>
-          <span>收货地址：</span>{{ showAddress.fullLocation.replace(/ /g, '') + showAddress.address }}
+          <span>收货地址：</span
+          >{{
+            showAddress.fullLocation.replace(/ /g, '') + showAddress.address
+          }}
         </li>
       </ul>
 
@@ -77,10 +80,7 @@
     </template>
   </LDialog>
   <!-- 收货添加和编辑的组件 -->
-  <addressEdit
-    @on-success="successHandler"
-    ref="addressEditCom"
-  />
+  <addressEdit @on-success="successHandler" ref="addressEditCom" />
 </template>
 <script lang="ts" setup>
 import { defineProps, ref, defineEmits } from 'vue';
@@ -113,7 +113,7 @@ const openAddressesEdit = (address: {}) => {
 //
 const successHandler = (form: any) => {
   // 根据ID查找数据,有则是修改数据,反之就是添加数据
-  const address = props.list.find(item => item.id === form.id)
+  const address = props.list.find((item) => item.id === form.id);
   if (address) {
     for (const key in address) {
       address[key] = form[key];
@@ -123,7 +123,6 @@ const successHandler = (form: any) => {
     const JsonStr = JSON.stringify(form);
     props.list.unshift(JSON.parse(JsonStr));
   }
-
 };
 </script>
 <script lang="ts">

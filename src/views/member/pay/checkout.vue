@@ -88,7 +88,7 @@
         </div>
         <!-- 提交订单 -->
         <div class="submit">
-          <LButton type="primary" @click='submitOrderFn'>提交订单</LButton>
+          <LButton type="primary" @click="submitOrderFn">提交订单</LButton>
         </div>
       </div>
     </div>
@@ -96,7 +96,7 @@
 </template>
 <script lang="ts" setup>
 import CheckoutAddress from './components/checkout-address.vue';
-import Message from '@/plugins/Toast'
+import Message from '@/plugins/Toast';
 import { createOrder, submitOrder } from '@/api/order';
 import { reactive, ref } from 'vue';
 import router from '../../../router';
@@ -104,7 +104,10 @@ const order: any = ref(null);
 // 获取结算生成的订单信息
 createOrder().then(({ data }) => {
   order.value = data.result;
-  reqParams.goods = data.result.goods.map(({ skuId, count }: any) => ({skuId, count}))
+  reqParams.goods = data.result.goods.map(({ skuId, count }: any) => ({
+    skuId,
+    count
+  }));
 });
 // 提交订单: 需要收货地址ID
 const changeAddresses = (id: string) => {
@@ -120,21 +123,20 @@ const reqParams: any = reactive({
   goods: [] as any,
   // 收货地址ID
   addressId: null
-})
+});
 // 提交订单的处理
 const submitOrderFn = () => {
   // 收货地址是否选择
- if (!reqParams.addressId) {
-   return Message({type: "warn", text: "亲,请选择收货地址"})
- }
- submitOrder(reqParams).then(({ data }) => {
-  //  提交订单成功
-  Message({ type: "success", text: "订单提交成功"})
-  //
-  router.push(`/member/pay?orderId=${data.result.id}`)
- })
-}
-
+  if (!reqParams.addressId) {
+    return Message({ type: 'warn', text: '亲,请选择收货地址' });
+  }
+  submitOrder(reqParams).then(({ data }) => {
+    //  提交订单成功
+    Message({ type: 'success', text: '订单提交成功' });
+    //
+    router.push(`/member/pay?orderId=${data.result.id}`);
+  });
+};
 </script>
 <script lang="ts">
 export default {
