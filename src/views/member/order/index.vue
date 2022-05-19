@@ -16,6 +16,8 @@
       <OrderItem
         @on-cancel="handleCancel"
         @on-delete="handleDelete"
+        @on-confirm="handleConfirm"
+        @on-logistics="handleLogistics"
         v-for="item in orderList"
         :order="item"
         :key="item.id"
@@ -31,20 +33,23 @@
     ></lPagination>
     <!-- 取消订单 -->
     <OrderCancel ref="orderCancelRef" />
+    <OrderLogistics ref="orderLogisticsRef" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, watch } from 'vue';
-import { findOrderList, deleteOrder } from '@/api/order';
+import { ref, reactive, watch, defineExpose } from 'vue';
+import { findOrderList, deleteOrder, confirmOrder } from '@/api/order';
 import Tabs from '../../../library/l-tabs/l-tabs.vue';
 import TabsPanel from '../../../library/l-tabs/l-tabs-panel.tsx';
 import OrderItem from './components/order-item.vue';
 import OrderCancel from './components/order-cancel.vue';
+import OrderLogistics from './components/order-logistics.vue';
 import lPagination from '../../../library/l-pagination/l-pagination.vue';
 import confirm from '../../../plugins/confirm';
 import Message from '@/plugins/Toast';
 import { orderStatus } from '@/api/constant';
+import { handleConfirm } from './hooks/index';
 // import TabsPanel from '../../../library/l-tabs/l-tabs-panel.vue';
 const activeName = ref('all');
 // 点击Tabs触发的事件
@@ -101,12 +106,30 @@ const handleDelete = (order: any) => {
     })
     .catch((e) => {});
 };
-</script>
-<script lang="ts">
-export default {
-  name: 'orderIndex'
+// 确认收货
+// const handleConfirm = (order: any) => {
+//   confirm({ text: '亲, 您确认收货吗? 确认后货款将打给卖家!' })
+//     .then(() => {
+//       confirmOrder(order.id).then(() => {
+//         Message({ type: 'success', text: '确认收货成功~' });
+//         order.orderState = 4;
+//       });
+//     })
+//     .catch((e) => {});
+// };
+// 查看物流
+const orderLogisticsRef = ref<InstanceType<typeof OrderLogistics>>();
+const handleLogistics = (order: any) => {
+  orderLogisticsRef.value?.open(order);
 };
+defineExpose({
+  handleLogistics,
+  handleConfirm,
+  handleDelete,
+  handleCancel
+});
 </script>
+
 <style scoped lang="less">
 .order-list {
   background: #fff;

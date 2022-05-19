@@ -95,20 +95,32 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { useRoute } from 'vue-router'
 import CheckoutAddress from './components/checkout-address.vue';
 import Message from '@/plugins/Toast';
-import { createOrder, submitOrder } from '@/api/order';
+import { createOrderById,createOrder, submitOrder } from '@/api/order';
 import { reactive, ref } from 'vue';
 import router from '../../../router';
+const route = useRoute()
 const order: any = ref(null);
 // 获取结算生成的订单信息
-createOrder().then(({ data }) => {
+if (route.query.orderId) {
+  createOrderById(route.query.orderId).then(({ data }) => {
+  order.value = data.result;
+  reqParams.goods = data.result.goods.map(({ skuId, count }: any) => ({
+    skuId,
+    count
+  }));
+})
+} else {
+  createOrder().then(({ data }) => {
   order.value = data.result;
   reqParams.goods = data.result.goods.map(({ skuId, count }: any) => ({
     skuId,
     count
   }));
 });
+}
 // 提交订单: 需要收货地址ID
 const changeAddresses = (id: string) => {
   reqParams.addressId = id;

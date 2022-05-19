@@ -1,7 +1,7 @@
 // 订单相关的API
 import request from '../utils/request';
 /**
- * 结算页面 - 生成订单
+ * 结算页面 - 生成订单-根据购物车的选中商品
  * @returns Promise
  */
 export const createOrder = () => {
@@ -10,7 +10,16 @@ export const createOrder = () => {
     url: '/member/order/pre'
   });
 };
-
+/**
+ * 结算页面 - 生成订单-根据订单ID
+ * @returns Promise
+ */
+ export const createOrderById = (orderId: string) => {
+  return request({
+    method: 'GET',
+    url: '/member/order/repurchase/' + orderId
+  });
+};
 /**
  * 添加收货地址
  * @param {Object} form - 参考接口文档
@@ -108,5 +117,28 @@ export const deleteOrder = (ids: any) => {
     data: {
       ids: [ids]
     }
+  });
+};
+
+/**
+ * 确认收货
+ * @param {String} orderId - 订单ID
+ * @returns Promise
+ */
+export const confirmOrder = (orderId: string) => {
+  return request({
+    method: 'put',
+    url: `/member/order/${orderId}/receipt`
+  });
+};
+/**
+ * 查看物流
+ * @param {String} id - 订单ID
+ * @returns
+ */
+export const logisticsOrder = (id: string) => {
+  return request({
+    method: 'GET',
+    url: `/member/order/${id}/logistics`
   });
 };

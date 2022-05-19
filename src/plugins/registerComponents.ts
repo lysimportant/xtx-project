@@ -13,9 +13,11 @@ import LButton from '../library/l-button/l-button.vue';
 import LPagintion from '../library/l-pagination/l-pagination.vue';
 import LConfirm from '../library/l-confirm/l-confirm.vue';
 import LDialog from '../library/l-dialog/l-dialog.vue';
+import LSteps from '../library/l-steps/l-steps.tsx';
 import Message from './Toast';
 import Confirm from './confirm';
 const components = [
+  LSteps,
   Skeleton,
   Carousel,
   CarMore,

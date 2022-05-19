@@ -19,7 +19,7 @@
       <div class="column goods">
         <ul>
           <li v-for="(goods, index) in order.skus" :key="goods.id">
-            <RouterLink class="image" :to="`/product/${goods.id}`">
+            <RouterLink class="image" :to="`/product/${goods.spuId}`">
               <img :src="goods.image" alt="" />
             </RouterLink>
             <div class="info">
@@ -40,7 +40,7 @@
         <!-- 待收货  查看物流 -->
         <!-- 待评价  评价商品 -->
         <!-- 已完成  查看评价 -->
-        <p @click="$emit('on-logistics', order)" v-if="order.orderState === 3">
+        <p @click="emit('on-logistics', order)" v-if="order.orderState === 3">
           <a class="green" href="javascript:;">查看物流</a>
         </p>
         <p v-if="order.orderState === 4">
@@ -64,7 +64,11 @@
           size="small"
           >立即付款</LButton
         >
-        <LButton v-if="order.orderState === 3" type="primary" size="small"
+        <LButton
+          @click="emit('on-confirm', order)"
+          v-if="order.orderState === 3"
+          type="primary"
+          size="small"
           >确认收货</LButton
         >
         <p>
@@ -77,7 +81,10 @@
         <p v-if="order.orderState === 1">
           <a href="javascript:;" @click="emit('on-cancel', order)">取消订单</a>
         </p>
-        <p v-if="[2, 3, 4, 5].includes(order.orderState)">
+        <p
+          @click="$router.push(`/member/checkout?orderId=${order.id}`)"
+          v-if="[2, 3, 4, 5].includes(order.orderState)"
+        >
           <a href="javascript:;">再次购买</a>
         </p>
         <p v-if="[4, 5].includes(order.orderState)">
@@ -91,7 +98,12 @@
 import { defineProps, withDefaults, defineEmits } from 'vue';
 import { orderStatus } from '@/api/constant';
 import { usePayTime } from '../../../../hooks';
-const emit = defineEmits(['on-cancel', 'on-delete', 'on-logistics']);
+const emit = defineEmits([
+  'on-cancel',
+  'on-delete',
+  'on-logistics',
+  'on-confirm'
+]);
 interface Props {
   order: any;
 }
